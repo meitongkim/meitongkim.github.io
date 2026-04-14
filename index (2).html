@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mei Tong Kim</title>
+<meta name="description" content="Mei Tong Kim — founder, linguistics nerd, builder of things that matter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f9f9f7;
+    --mid: #555;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html { font-size: 17px; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--serif);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--black);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid var(--black);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+  }
+
+  @media (hover: none) {
+    .cursor, .cursor-ring { display: none; }
+    body { cursor: auto; }
+    a { cursor: pointer; }
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 10vh 2rem 12vh;
+  }
+
+  .top-rule {
+    width: 0;
+    height: 1px;
+    background: var(--black);
+    margin-bottom: 3.5rem;
+    animation: expandRule 0.9s cubic-bezier(0.77,0,0.18,1) 0.2s forwards;
+  }
+
+  @keyframes expandRule { to { width: 100%; } }
+
+  .name-block {
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  h1 em { font-style: italic; font-weight: 300; }
+
+  .greeting-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3em;
+    flex-wrap: wrap;
+  }
+
+  .greeting-word {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--black);
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    min-width: 2ch;
+  }
+
+  .typed-text {
+    border-right: 2px solid var(--black);
+    padding-right: 2px;
+    animation: blinkCaret 0.75s step-end infinite;
+  }
+
+  @keyframes blinkCaret {
+    0%, 100% { border-color: var(--black); }
+    50% { border-color: transparent; }
+  }
+
+  .tagline {
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--mid);
+    letter-spacing: 0.01em;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.7s ease 0.75s forwards;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: #ddd;
+    margin: 2.5rem 0;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.9s forwards;
+  }
+
+  .bio {
+    font-size: 1.12rem;
+    line-height: 1.85;
+    font-weight: 300;
+    color: var(--black);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.7s ease 1.0s forwards;
+  }
+
+  .bio + .bio { margin-top: 1.2rem; animation-delay: 1.08s; }
+  .bio + .bio + .bio { margin-top: 1.2rem; animation-delay: 1.16s; }
+  .bio + .bio + .bio + .bio { margin-top: 1.2rem; animation-delay: 1.24s; }
+  .bio em { font-style: italic; }
+
+  .sections { margin-top: 3rem; }
+
+  .section {
+    margin-bottom: 2.6rem;
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  .section:nth-child(1) { animation: fadeUp 0.7s ease 1.2s forwards; }
+  .section:nth-child(2) { animation: fadeUp 0.7s ease 1.35s forwards; }
+  .section:nth-child(3) { animation: fadeUp 0.7s ease 1.5s forwards; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0e0e0;
+  }
+
+  ul { list-style: none; padding: 0; }
+
+  ul li {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--black);
+    padding: 0.18rem 0;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  ul li::before {
+    content: '—';
+    color: #bbb;
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  ul li em { font-style: italic; }
+
+  a {
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid #bbb;
+    transition: border-color 0.2s ease;
+    cursor: none;
+  }
+
+  a:hover { border-color: var(--black); }
+
+  .closing {
+    margin-top: 2rem;
+    font-size: 1.08rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.85;
+    color: var(--black);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.7s ease 1.65s forwards;
+  }
+
+  .contact {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--mid);
+    opacity: 0;
+    animation: fadeIn 0.7s ease 1.85s forwards;
+  }
+
+  .contact a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--black);
+    border-bottom: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #ccc;
+    transition: text-decoration-color 0.2s;
+    cursor: none;
+  }
+
+  .contact a:hover { text-decoration-color: var(--black); }
+  .contact-sep { margin: 0 0.6rem; color: #ccc; }
+
+  .watermark {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 2rem;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: #ccc;
+    opacity: 0;
+    animation: fadeIn 1s ease 2.2s forwards;
+    pointer-events: none;
+  }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 99px; }
+
+  @media (max-width: 520px) {
+    html { font-size: 15px; }
+    .page { padding: 8vh 1.4rem 10vh; }
+    .watermark { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="page">
+
+  <div class="top-rule"></div>
+
+  <div class="name-block">
+    <h1>
+      <div class="greeting-line">
+        <span class="greeting-word"><span class="typed-text" id="typedGreeting"></span></span>
+        <span>I'm Mei Tong Kim</span>
+      </div>
+      <em>or your favourite linguistics nerd.</em>
+    </h1>
+    <p class="tagline">
+      2024: Built Social Issues Bubble — 12 members, 7 countries, one very stubborn dream.<br>
+      2026: Built Youth for Sustainable Policy — 20k views, 5 countries, still going.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="bio">
+    Someone once asked me: <em>"Why do you even do this? What's your social impact, really?"</em><br>
+    I told them: I'm not doing this for self-gratification. There is no monetary goal.
+    I simply want to help people. That's the whole sentence.
+  </p>
+
+  <p class="bio">
+    What is life without experience?
+  </p>
+
+  <p class="bio">
+    I have this urge — a very consistent, very persistent urge — to put things in the right order.
+    To build systems. To make things work. But equally, to break them when they stop serving people,
+    and grow beyond them entirely. I think growing is one of the few things in life
+    that is entirely self-determined. It has nothing to do with age, or experience, or permission.
+    If you want to grow, just grow.
+  </p>
+
+  <p class="bio">
+    My heroes are my parents. No footnote needed.
+  </p>
+
+  <div class="sections">
+
+    <div class="section">
+      <div class="section-label">Currently</div>
+      <ul>
+        <li>Leading <a href="https://www.instagram.com/ysp.official/" target="_blank" rel="noopener">Youth for Sustainable Policy</a> — where research meets real dialogue.</li>
+        <li>Absorbing French, Spanish, Korean, and Japanese — simultaneously, on purpose. Languages are so incredibly fascinating.</li>
+        <li>Practising Conscious Leadership all day, every day.</li>
+        <li>Writing my Children's book on Singaporean Food Heritage.</li>
+        <li>Filming ideas for content creation.</li>
+        <li>Building systems, breaking systems, and deciding which ones deserve to be rebuilt.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Previously</div>
+      <ul>
+        <li>Founded Social Issues Bubble — grew it to a 12-person team across 7 countries.</li>
+        <li>Side quested so much my CV is 6 pages long RAW.</li>
+        <li>Spent a lot of time asking the right questions before I found the right rooms to ask them in.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Outside of work</div>
+      <ul>
+        <li>Most fanatic lover of Chagee you will ever meet. I will name every ingredient and tell you what tea leaf it is with both eyes closed.</li>
+        <li>Obsessed with Yeren Sianshen ice cream. The matcha flavour doesn't exist in Singapore. I'm grieving.</li>
+        <li>I sketch. I photograph. I have what people call <em>an eye for things</em> — I think I just notice.</li>
+        <li>In a parallel life I am studying Herbology, painting in oils and watercolours, and talking about animals all afternoon.</li>
+        <li>Or I'm a professor at Cambridge. Both options are very much on the table.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <p class="closing">
+    I feel like I could do anything and everything.<br>
+    I know one lifetime probably isn't enough.<br>
+    <em>So I'm making it count.</em>
+  </p>
+
+  <div class="contact">
+    <a href="mailto:meitongkimnyp@gmail.com">meitongkimnyp@gmail.com</a>
+    <span class="contact-sep">×</span>
+    <a href="https://www.linkedin.com/in/mei-tong-kim-505544311/" target="_blank" rel="noopener">LinkedIn</a>
+    <span class="contact-sep">×</span>
+    <a href="https://www.instagram.com/luvyxvn/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+
+</div>
+
+<div class="watermark">Singapore · 2026</div>
+
+<script>
+  // ── Custom cursor ──
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '14px';
+      cursor.style.height = '14px';
+      ring.style.width = '48px';
+      ring.style.height = '48px';
+      ring.style.opacity = '0.25';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px';
+      cursor.style.height = '8px';
+      ring.style.width = '32px';
+      ring.style.height = '32px';
+      ring.style.opacity = '0.5';
+    });
+  });
+
+  // ── Greeting type/delete animation ──
+  const greetings = [
+    'Hi!',
+    'Bonjour!',
+    '¡Hola!',
+    '안녕하세요!',
+    'こんにちは!',
+    'Ciao!',
+    'Hallo!',
+    '你好！',
+    'Salut!',
+  ];
+
+  const typedEl = document.getElementById('typedGreeting');
+  let gi = 0, charIdx = 0, deleting = false;
+  const TYPE_SPEED = 90;
+  const DELETE_SPEED = 55;
+  const PAUSE_AFTER_TYPE = 1400;
+  const PAUSE_AFTER_DELETE = 200;
+
+  function typeStep() {
+    const word = greetings[gi];
+    if (!deleting) {
+      charIdx++;
+      typedEl.textContent = word.slice(0, charIdx);
+      if (charIdx === word.length) {
+        setTimeout(() => { deleting = true; typeStep(); }, PAUSE_AFTER_TYPE);
+        return;
+      }
+      setTimeout(typeStep, TYPE_SPEED);
+    } else {
+      charIdx--;
+      typedEl.textContent = word.slice(0, charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        gi = (gi + 1) % greetings.length;
+        setTimeout(typeStep, PAUSE_AFTER_DELETE);
+        return;
+      }
+      setTimeout(typeStep, DELETE_SPEED);
+    }
+  }
+
+  setTimeout(typeStep, 900);
+</script>
+
+</body>
+</html>
